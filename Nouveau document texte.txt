@@ -1,0 +1,39 @@
+1)DECLARE
+v_name customes.customer_Name%type;
+v_tel customes.customer_Tel%type;
+
+BEGIN 
+SELECT customes_Name,customes_Tel INTO v_name , v_tel FROM customer
+dbms_output.put_line(v_name|| ' ' || v_tel);
+END ./
+2) CREATE OR REPLACE  PROCEDURE PS_customer_Product (cus_id custome.customer_id%type) IS 
+DECLARE 
+excep EXCEPTION ;
+CURSOR cur IS SELECT product_name FROM product WHERE cus_id=customer_id;
+BEGIN
+FOR rec IN cur LOOP
+dbms_output.put_line(rec.name_product);
+END LOOP ;
+EXCEPTION
+WHEN NO_DATA_FOUND  THEN
+dbms_output.put_line('not found')
+WHEN execp THEN
+dbms_output.put_line('name product )
+
+END;
+3)
+CREATE OR REPLACE FUNCTION FN_Customer_Orders(cus_id ordres.customer_id%type)RETURN number IS 
+Nb number;
+BEGIN 
+select count(*) into Nb from ordre wehre customer_id=cus_id;
+return Nb;
+END;
+4)
+CREATE TRIGGER TRIG_INS_ORDERS
+AFTER INSERT OR UPDATE ON ordre
+BEGIN
+	INSERT INTO log(ordre, v_date, action)
+	VALUES ('', SYSDATE,
+	'INSERT/UPDATE on ordre') ;
+END;
+/
